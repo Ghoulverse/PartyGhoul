@@ -1,48 +1,52 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 
-interface GhostPosition {
+interface CursorState {
   x: number;
   y: number;
   isMoving: boolean;
   velocity: number;
+  beatPulse: number; // 0-1 sine wave synced to BPM
 }
 
-export function useGhostPosition(): GhostPosition {
-  const [position, setPosition] = useState<GhostPosition>({
+export function usePartyCursor(bpm = 128): CursorState {
+  const [state, setState] = useState<CursorState>({
     x: typeof window !== 'undefined' ? window.innerWidth / 2 - 80 : 0,
     y: typeof window !== 'undefined' ? window.innerHeight / 2 - 80 : 0,
     isMoving: false,
     velocity: 0,
+    beatPulse: 0,
   });
 
-  const targetRef = useRef({ x: position.x, y: position.y });
-  const currentRef = useRef({ x: position.x, y: position.y });
+  const targetRef = useRef({ x: state.x, y: state.y });
+  const currentRef = useRef({ x: state.x, y: state.y });
   const velocityRef = useRef({ x: 0, y: 0 });
   const lastMoveTime = useRef(Date.now());
   const rafRef = useRef<number>(0);
+  const beatStartRef = useRef(Date.now());
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    const ghostSize = window.innerWidth < 768 ? 100 : 160;
+    const size = window.innerWidth < 768 ? 90 : 140;
     targetRef.current = {
-      x: Math.max(20, Math.min(window.innerWidth - ghostSize - 20, e.clientX - ghostSize / 2)),
-      y: Math.max(20, Math.min(window.innerHeight - ghostSize - 20, e.clientY - ghostSize / 2)),
+      x: Math.max(10, Math.min(window.innerWidth - size - 10, e.clientX - size / 2)),
+      y: Math.max(10, Math.min(window.innerHeight - size - 10, e.clientY - size / 2)),
     };
     lastMoveTime.current = Date.now();
   }, []);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
     const touch = e.touches[0];
-    const ghostSize = window.innerWidth < 768 ? 100 : 160;
+    const size = window.innerWidth < 768 ? 90 : 140;
     targetRef.current = {
-      x: Math.max(20, Math.min(window.innerWidth - ghostSize - 20, touch.clientX - ghostSize / 2)),
-      y: Math.max(20, Math.min(window.innerHeight - ghostSize - 20, touch.clientY - ghostSize / 2)),
+      x: Math.max(10, Math.min(window.innerWidth - size - 10, touch.clientX - size / 2)),
+      y: Math.max(10, Math.min(window.innerHeight - size - 10, touch.clientY - size / 2)),
     };
     lastMoveTime.current = Date.now();
   }, []);
 
   useEffect(() => {
-    const spring = 0.06;
-    const friction = 0.85;
+    const spring = 0.07;
+    const friction = 0.82;
+    const beatInterval = 60000 / bpm;
 
     const animate = () => {
       const dx = targetRef.current.x - currentRef.current.x;
@@ -61,11 +65,17 @@ export function useGhostPosition(): GhostPosition {
       const timeSinceMove = Date.now() - lastMoveTime.current;
       const isMoving = timeSinceMove < 150 || speed > 0.5;
 
-      setPosition({
+      // BPM pulse: sine wave synced to beat
+      const elapsed = Date.now() - beatStartRef.current;
+      const beatPhase = (elapsed % beatInterval) / beatInterval;
+      const beatPulse = Math.sin(beatPhase * Math.PI * 2) * 0.5 + 0.5;
+
+      setState({
         x: currentRef.current.x,
         y: currentRef.current.y,
         isMoving,
         velocity: speed,
+        beatPulse,
       });
 
       rafRef.current = requestAnimationFrame(animate);
@@ -81,7 +91,7 @@ export function useGhostPosition(): GhostPosition {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleTouchMove);
     };
-  }, [handleMouseMove, handleTouchMove]);
+  }, [handleMouseMove, handleTouchMove, bpm]);
 
-  return position;
+  return state;
 }

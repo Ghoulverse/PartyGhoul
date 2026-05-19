@@ -1,5 +1,5 @@
-import GhostMascot from '@/components/GhostMascot';
-import AmbientParticles from '@/components/AmbientParticles';
+import PartyMascot from '@/components/PartyMascot';
+import PartyParticles from '@/components/PartyParticles';
 import Home from '@/pages/Home';
 
 export default function App() {
@@ -8,11 +8,11 @@ export default function App() {
       {/* Noise texture overlay */}
       <div className="noise-overlay" />
 
-      {/* Ambient floating particles */}
-      <AmbientParticles />
+      {/* Ambient party particles (confetti, glow sticks, sparkles) */}
+      <PartyParticles />
 
-      {/* The interactive ghost mascot */}
-      <GhostMascot />
+      {/* The interactive party mascot */}
+      <PartyMascot />
 
       {/* Page content */}
       <Home />
