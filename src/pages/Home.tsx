@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Twitter, Instagram, Youtube, ArrowRight, Gamepad2,
   Ghost, ExternalLink, Wine, Sparkles, Music, Zap, Ticket,
+  FlaskConical, Leaf, Hammer, Package, Star,
 } from 'lucide-react';
 import { config } from '@/data/ghoul.config';
 
@@ -13,13 +14,23 @@ const OTHER_GHOULS = config.crossLinks.filter((g) => g.id !== 'ghoulverse');
 const GHOULVERSE_LINK = config.crossLinks.find((g) => g.id === 'ghoulverse');
 
 const PRODUCT_ICONS = [Wine, Sparkles, Music, Zap, Ticket];
+const CATEGORY_TABS = [
+  { key: 'core' as const, label: 'Core Range', icon: Star },
+  { key: 'pro' as const, label: 'Pro Range', icon: FlaskConical },
+  { key: 'tool' as const, label: 'Tools', icon: Hammer },
+  { key: 'refill' as const, label: 'Refills', icon: Package },
+  { key: 'limited' as const, label: 'Limited Drops', icon: Leaf },
+];
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<'core' | 'pro' | 'tool' | 'refill' | 'limited'>('core');
   const heroRef = useRef<HTMLDivElement>(null);
   const aftermathRef = useRef<HTMLDivElement>(null);
+  const scienceRef = useRef<HTMLDivElement>(null);
   const productRef = useRef<HTMLDivElement>(null);
   const lineupRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<HTMLDivElement>(null);
+  const portfolioRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const heroTextRef = useRef<HTMLDivElement>(null);
 
@@ -36,7 +47,7 @@ export default function Home() {
         });
       }
 
-      const sections = [aftermathRef, productRef, lineupRef, gameRef, ctaRef];
+      const sections = [aftermathRef, scienceRef, productRef, lineupRef, gameRef, portfolioRef, ctaRef];
       sections.forEach((ref) => {
         if (ref.current) {
           gsap.from(ref.current.querySelectorAll('.reveal'), {
@@ -57,6 +68,8 @@ export default function Home() {
 
     return () => ctx.revert();
   }, []);
+
+  const filteredProducts = config.products.filter((p) => p.category === activeTab);
 
   return (
     <div className="relative font-inter">
@@ -138,7 +151,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right side - empty space for mascot to float in */}
           <div className="hidden md:flex items-center justify-center h-[60vh] relative">
             <div
               className="absolute w-64 h-64 rounded-full opacity-20 blur-3xl"
@@ -151,7 +163,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Neon border at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-px"
           style={{ background: 'linear-gradient(90deg, transparent, #ff00ff, #00f0ff, transparent)' }} />
       </section>
@@ -178,7 +189,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Stats - styled like club stamps */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {[
               { icon: Music, value: '∞', label: 'Parties Cleaned', color: '#ff00ff' },
@@ -210,24 +220,94 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== PRODUCTS - VIP PASSES ===== */}
+      {/* ===== THE SCIENCE ===== */}
+      <section ref={scienceRef} className="relative py-24 md:py-40 px-4 md:px-8 border-t border-[#ff00ff]/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="reveal mb-12">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-px bg-[#ff00ff]" />
+              <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#ff00ff]">
+                Proprietary Technology
+              </span>
+            </div>
+            <h2 className="font-bungee text-4xl md:text-6xl text-white mb-4"
+              style={{ textShadow: '0 0 20px rgba(255,255,255,0.15)' }}>
+              {config.science.title}
+            </h2>
+            <p className="text-[#ff00ff] text-xl md:text-2xl font-bungee mb-6">
+              {config.science.subtitle}
+            </p>
+          </div>
+
+          <div className="reveal grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <p className="text-[#94a3b8] text-base leading-relaxed">
+              {config.science.description}
+            </p>
+            <p className="text-[#94a3b8]/70 text-sm leading-relaxed">
+              {config.science.adaptation}
+            </p>
+          </div>
+
+          <div className="reveal grid grid-cols-2 md:grid-cols-4 gap-4">
+            {config.science.stats.map((stat, i) => (
+              <div key={i} className="p-5 border-2 border-dashed text-center"
+                style={{ borderColor: '#ff00ff30', background: 'rgba(10, 10, 26, 0.8)' }}>
+                <div className="font-bungee text-2xl md:text-3xl text-[#ff00ff] mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-[#94a3b8] text-[10px] tracking-wider uppercase">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== PRODUCTS - TABBED BROWSER ===== */}
       <section ref={productRef} className="relative py-24 md:py-40 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="reveal mb-12 md:mb-16">
             <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#ff00ff] mb-4 block">
-              The Drop
+              Product Architecture
             </span>
             <h2 className="font-bungee text-4xl md:text-5xl text-white mb-4"
               style={{ textShadow: '0 0 20px rgba(255,255,255,0.15)' }}>
-              COMING SOON
+              THE ARSENAL
             </h2>
             <p className="text-[#94a3b8] max-w-md">
-              The ultimate party cleanup arsenal. VIP access only.
+              Five product lines. Nine formulations. One mission: total aftermath annihilation.
             </p>
           </div>
 
+          {/* Tabs */}
+          <div className="reveal flex flex-wrap gap-2 mb-8">
+            {CATEGORY_TABS.map((tab) => {
+              const isActive = activeTab === tab.key;
+              const count = config.products.filter((p) => p.category === tab.key).length;
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
+                  className="flex items-center gap-2 px-4 py-2 text-xs font-bold tracking-wider uppercase transition-all"
+                  style={{
+                    background: isActive ? 'linear-gradient(135deg, #ff00ff, #ff0080)' : 'rgba(10, 10, 26, 0.8)',
+                    color: isActive ? '#0a0a1a' : '#94a3b8',
+                    border: isActive ? 'none' : '2px dashed #ff00ff30',
+                    boxShadow: isActive ? '0 0 15px rgba(255,0,255,0.3)' : 'none',
+                  }}
+                >
+                  <tab.icon className="w-3 h-3" />
+                  {tab.label}
+                  <span className="text-[10px] opacity-60">({count})</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Product Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {config.products.map((product, i) => {
+            {filteredProducts.map((product, i) => {
               const Icon = PRODUCT_ICONS[i % PRODUCT_ICONS.length];
               const colors = ['#ff00ff', '#00f0ff', '#ffff00', '#ff0080', '#00ff88'];
               const color = colors[i % colors.length];
@@ -249,7 +329,6 @@ export default function Home() {
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
-                  {/* Ticket notch */}
                   <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-8 bg-[#0a0a1a] rounded-r-full"
                     style={{ borderRight: `2px solid ${color}30` }} />
                   <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-8 bg-[#0a0a1a] rounded-l-full"
@@ -262,24 +341,47 @@ export default function Home() {
                     </div>
                     <span className="text-[10px] font-bold tracking-[0.2em] uppercase px-2 py-1 border"
                       style={{ color, borderColor: `${color}40` }}>
-                      VIP
+                      {product.category}
                     </span>
                   </div>
 
-                  <h3 className="font-bungee text-lg text-white mb-2 tracking-wide">
+                  <h3 className="font-bungee text-lg text-white mb-1 tracking-wide">
                     {product.name.toUpperCase()}
                   </h3>
-                  <p className="text-[#94a3b8] text-xs leading-relaxed mb-4">
-                    {product.description || 'Premium party cleanup technology. No stain survives.'}
+                  <p className="text-[#ff00ff] text-xs font-bold mb-3">
+                    {product.tagline}
                   </p>
+                  <p className="text-[#94a3b8] text-xs leading-relaxed mb-4">
+                    {product.description}
+                  </p>
+
+                  {product.heroIngredient && (
+                    <div className="mb-3">
+                      <span className="text-[9px] tracking-wider uppercase text-[#94a3b8]/50">
+                        Powered by
+                      </span>
+                      <span className="text-[10px] font-bold ml-2" style={{ color }}>
+                        {product.heroIngredient}
+                      </span>
+                    </div>
+                  )}
+
+                  <ul className="space-y-1 mb-4">
+                    {product.features.map((feat, fi) => (
+                      <li key={fi} className="flex items-center gap-2 text-[10px] text-[#94a3b8]/70">
+                        <span className="w-1 h-1 rounded-full" style={{ background: color }} />
+                        {feat}
+                      </li>
+                    ))}
+                  </ul>
 
                   <div className="flex items-center justify-between pt-4 border-t"
                     style={{ borderColor: `${color}15` }}>
                     <span className="text-[10px] tracking-[0.2em] uppercase text-[#94a3b8]/50">
-                      ADMIT ONE
+                      {product.volume}
                     </span>
-                    <span className="text-[10px] font-bold tracking-wider" style={{ color }}>
-                      SOON
+                    <span className="text-sm font-bold" style={{ color }}>
+                      {product.price}
                     </span>
                   </div>
                 </div>
@@ -305,7 +407,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Festival poster grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12">
             {OTHER_GHOULS.map((g) => {
               const isHeadliner = ['goo', 'party'].includes(g.id);
@@ -386,7 +487,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== GAME - CLUB FLYER STYLE ===== */}
+      {/* ===== GAME ===== */}
       <section ref={gameRef} className="relative py-24 md:py-40 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <div
@@ -396,7 +497,6 @@ export default function Home() {
               background: 'linear-gradient(135deg, rgba(255,0,255,0.05), rgba(0,240,255,0.05))',
             }}
           >
-            {/* Corner accents */}
             <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#ff00ff]" />
             <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#00f0ff]" />
             <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#00f0ff]" />
@@ -442,12 +542,75 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== PORTFOLIO STRIP ===== */}
+      <section ref={portfolioRef} className="relative py-16 md:py-24 px-4 md:px-8 border-t border-[#ff00ff]/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="reveal text-center mb-10">
+            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#94a3b8]/50 mb-2 block">
+              The House of GHOUL
+            </span>
+            <h3 className="font-bungee text-2xl md:text-3xl text-white">
+              THE GHOULVERSE PORTFOLIO
+            </h3>
+          </div>
+
+          <div className="reveal grid grid-cols-4 md:grid-cols-8 gap-3">
+            {config.crossLinks.map((g) => {
+              const isActive = g.id === config.id;
+              const productCount = g.id === config.id ? config.products.length : '-';
+
+              return (
+                <a
+                  key={g.id}
+                  href={g.live ? g.domain : `https://www.ghoulverse.com/ghouls/${g.id}/`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group text-center p-3 md:p-4 transition-all duration-300"
+                  style={{
+                    background: isActive ? `${g.color}15` : 'rgba(10, 10, 26, 0.5)',
+                    border: isActive ? `2px solid ${g.color}` : '2px solid transparent',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.borderColor = `${g.color}40`;
+                      e.currentTarget.style.background = `${g.color}08`;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.borderColor = 'transparent';
+                      e.currentTarget.style.background = 'rgba(10, 10, 26, 0.5)';
+                    }
+                  }}
+                >
+                  <div className="text-2xl md:text-3xl mb-2 group-hover:scale-110 transition-transform">
+                    {g.icon}
+                  </div>
+                  <p className="text-[9px] md:text-[10px] font-bold tracking-wider uppercase text-white mb-0.5">
+                    {g.name.replace(' GHOUL', '')}
+                  </p>
+                  <p className="text-[8px] text-[#94a3b8]/40 uppercase tracking-wider">
+                    {g.realm}
+                  </p>
+                  {isActive && (
+                    <span className="text-[8px] mt-1 inline-block px-1.5 py-0.5"
+                      style={{ color: g.color, border: `1px solid ${g.color}40` }}>
+                      {productCount} Products
+                    </span>
+                  )}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* ===== FOOTER / CTA ===== */}
       <section ref={ctaRef} className="relative py-24 md:py-40 px-4 md:px-8">
         <div className="max-w-2xl mx-auto text-center">
           <div className="reveal mb-8">
             <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#ff00ff] mb-4 block">
-              Guest List
+              {config.id === 'party' ? 'Guest List' : 'Investor Relations'}
             </span>
             <h2 className="font-bungee text-4xl md:text-5xl text-white mb-4"
               style={{ textShadow: '0 0 20px rgba(255,255,255,0.15)' }}>

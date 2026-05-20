@@ -14,8 +14,13 @@ export interface CrossLink {
 
 export interface Product {
   name: string;
-  description?: string;
-  comingSoon?: boolean;
+  tagline: string;
+  description: string;
+  category: 'core' | 'pro' | 'tool' | 'refill' | 'limited';
+  volume: string;
+  price: string;
+  features: string[];
+  heroIngredient?: string;
 }
 
 export interface GhoulConfig {
@@ -40,6 +45,13 @@ export interface GhoulConfig {
     instagram?: string;
     youtube?: string;
   };
+  science: {
+    title: string;
+    subtitle: string;
+    description: string;
+    adaptation: string;
+    stats: { label: string; value: string }[];
+  };
 }
 
 export const config: GhoulConfig = {
@@ -53,11 +65,94 @@ export const config: GhoulConfig = {
   isLeader: false,
 
   products: [
-    { name: "Red Wine Remover", comingSoon: true },
-    { name: "Glitter Annihilator", comingSoon: true },
-    { name: "Confetti Dissolver", comingSoon: true },
-    { name: "Party Surface Wipes", comingSoon: true },
-    { name: "Morning-After Rescue Kit", comingSoon: true },
+    {
+      name: "Red Wine Remover",
+      tagline: "Lifts cabernet before it sets",
+      description: "Molecular-grade stain lifter engineered for the aftermath. Dissolves red wine, fruit juice, and organic pigments at the cellular level.",
+      category: "core",
+      volume: "500ml Spray",
+      price: "$19.99 AUD",
+      features: ["Works in 30 seconds", "Safe on wool & silk", "No bleaching agents"],
+      heroIngredient: "Fast-Acting Ectoplasm™",
+    },
+    {
+      name: "Party Surface Wipes",
+      tagline: "One wipe. Zero evidence.",
+      description: "Pre-moistened industrial wipes for rapid surface restoration. Handles stickiness, spills, and mystery residues.",
+      category: "core",
+      volume: "40 Pack",
+      price: "$12.99 AUD",
+      features: ["Biodegradable fibre", "Alcohol-free formula", "Re-sealable pouch"],
+      heroIngredient: "Fast-Acting Ectoplasm™",
+    },
+    {
+      name: "Morning-After Floor Wash",
+      tagline: "The carpet remembers. We don't.",
+      description: "Deep-penetrating floor solution for carpets, tiles, and hardwood. Neutralises odours while lifting embedded stains.",
+      category: "core",
+      volume: "1L Concentrate",
+      price: "$24.99 AUD",
+      features: ["Makes 5L diluted", "Pet-safe formulation", "Lavender finish"],
+      heroIngredient: "Fast-Acting Ectoplasm™",
+    },
+    {
+      name: "Glitter Annihilator",
+      tagline: "Removes craft herpes from any surface",
+      description: "The professional's choice for glitter, sequin, and micro-debris removal. Electrostatic capture technology lifts particles vacuum cleaners miss.",
+      category: "pro",
+      volume: "750ml Pro Spray",
+      price: "$34.99 AUD",
+      features: ["Electrostatic capture", "Safe on electronics", "Event-hall approved"],
+      heroIngredient: "Fast-Acting Ectoplasm™",
+    },
+    {
+      name: "Confetti Dissolver Pro",
+      tagline: "Industrial-grade celebration cleanup",
+      description: "Heavy-duty paper and foil dissolution for venues, halls, and outdoor spaces. Breaks down biodegradable confetti in minutes.",
+      category: "pro",
+      volume: "2L Pro Drum",
+      price: "$49.99 AUD",
+      features: ["Hose-attachment compatible", "Eco-certified breakdown", "Venue bulk pricing"],
+      heroIngredient: "Fast-Acting Ectoplasm™",
+    },
+    {
+      name: "UV Stain Detector Pen",
+      tagline: "Find what the lights hid",
+      description: "Handheld UV-A torch with integrated marking tip. Reveals invisible organic stains so nothing gets missed.",
+      category: "tool",
+      volume: "Kit",
+      price: "$29.99 AUD",
+      features: ["365nm UV-A LED", "2-hour battery life", "Marking tip included"],
+    },
+    {
+      name: "The Hangover Kit",
+      tagline: "Everything in one place",
+      description: "Hard-shell carry case with custom foam insert. Holds your full Party Ghoul arsenal for mobile deployment.",
+      category: "tool",
+      volume: "Carry Case",
+      price: "$59.99 AUD",
+      features: ["Fits 6 products", "Splash-resistant shell", "Shoulder strap included"],
+    },
+    {
+      name: "Party Wipes Refill",
+      tagline: "40 wipes. Zero plastic.",
+      description: "Compostable refill pack for the Party Surface Wipes system. Same strength, less waste.",
+      category: "refill",
+      volume: "40 Wipes",
+      price: "$9.99 AUD",
+      features: ["100% compostable", "No outer plastic", "Home-composts in 90 days"],
+      heroIngredient: "Fast-Acting Ectoplasm™",
+    },
+    {
+      name: "NYE Sparkle Destroyer",
+      tagline: "New Year's limited edition",
+      description: "A once-a-year formulation tuned for fireworks residue, champagne spray, and confetti fallout. When the ball drops, we pick it up.",
+      category: "limited",
+      volume: "500ml",
+      price: "$27.99 AUD",
+      features: ["Limited batch of 2,000", "Metallic residue formula", "Collectible label art"],
+      heroIngredient: "Fast-Acting Ectoplasm™",
+    },
   ],
 
   crossLinks: [
@@ -136,9 +231,9 @@ export const config: GhoulConfig = {
   ],
 
   cta: {
-    headline: "Wanna Party?",
-    subheadline: "Join the afterlife party. Be the first to know when we drop.",
-    buttonText: "Get on the List",
+    headline: "Investor Inquiries",
+    subheadline: "Join the GHOULVERSE portfolio. Request the full product deck and financial projections.",
+    buttonText: "Request Deck",
     placeholderText: "Enter your email...",
   },
 
@@ -148,5 +243,18 @@ export const config: GhoulConfig = {
     twitter: "#",
     instagram: "#",
     youtube: "#",
+  },
+
+  science: {
+    title: "The Science",
+    subtitle: "Fast-Acting Ectoplasm™",
+    description: "Every PARTY GHOUL product is powered by Fast-Acting Ectoplasm™ — a proprietary enzyme complex that accelerates molecular breakdown at the point of contact. Developed in the GHOULVERSE labs, this technology dissolves organic stains in seconds rather than hours.",
+    adaptation: "For the aftermath, we engineered a rapid-release variant that activates on contact with alcohol-based pigments, sugars, and synthetic dyes — the molecular signature of every great party.",
+    stats: [
+      { label: "Stain Dissolution Speed", value: "< 30 sec" },
+      { label: "Active Enzyme Strains", value: "12" },
+      { label: "Surface Compatibility", value: "40+" },
+      { label: "Biodegradability", value: "98%" },
+    ],
   },
 };
