@@ -4,8 +4,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Twitter, Instagram, Youtube, ArrowRight, Gamepad2,
   Ghost, ExternalLink, Wine, Sparkles, Music, Zap, Ticket,
+  Briefcase, Building2,
 } from 'lucide-react';
 import { config } from '@/data/ghoul.config';
+import PartyMascot from '@/components/PartyMascot';
+import PartyParticles from '@/components/PartyParticles';
+import EcosystemMap from '@/components/EcosystemMap';
+import MarketStats from '@/components/MarketStats';
+import IPBadge from '@/components/IPBadge';
+import RoadmapTimeline from '@/components/RoadmapTimeline';
+import InvestorCTA from '@/components/InvestorCTA';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,6 +46,10 @@ export default function Home() {
   const productRef = useRef<HTMLDivElement>(null);
   const lineupRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<HTMLDivElement>(null);
+  const ecosystemRef = useRef<HTMLDivElement>(null);
+  const marketRef = useRef<HTMLDivElement>(null);
+  const ipRef = useRef<HTMLDivElement>(null);
+  const roadmapRef = useRef<HTMLDivElement>(null);
   const portfolioRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
@@ -78,7 +90,7 @@ export default function Home() {
       });
 
       // Scroll reveals
-      [statsRef, scienceRef, productRef, lineupRef, gameRef, portfolioRef, ctaRef].forEach((ref) => {
+      [statsRef, ecosystemRef, scienceRef, productRef, lineupRef, gameRef, marketRef, ipRef, roadmapRef, portfolioRef, ctaRef].forEach((ref) => {
         if (ref.current) {
           gsap.from(ref.current.querySelectorAll('.reveal'), {
             y: 60,
@@ -125,6 +137,7 @@ export default function Home() {
 
       {/* Scan lines */}
       <div className="scanlines pointer-events-none fixed inset-0 z-50 opacity-[0.03]" />
+      <PartyParticles />
 
       {/* ===== NAV ===== */}
       <nav className="fixed top-0 left-0 right-0 z-50 py-3 px-4 md:px-8 border-b"
@@ -150,6 +163,10 @@ export default function Home() {
               className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#94a3b8] hover:text-[#00f0ff] transition-colors">
               GHOULVERSE <ExternalLink className="w-3 h-3" />
             </a>
+            <a href="#ecosystem"
+              className="hidden md:flex items-center gap-1.5 text-[10px] font-bold tracking-[0.2em] uppercase text-[#94a3b8] hover:text-[#ff00ff] transition-colors">
+              <Briefcase className="w-3 h-3" /> Investors
+            </a>
           </div>
         </div>
       </nav>
@@ -162,7 +179,12 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 pt-20">
-          <div className="hero-sub mb-6">
+          <div className="hero-sub mb-6 flex flex-col items-center gap-3">
+            <a href="https://www.ghoulverse.com" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 text-[10px] font-bold tracking-[0.4em] uppercase border-2 border-[#f59e0b]/40 text-[#f59e0b] hover:border-[#f59e0b] hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all">
+              <Building2 className="w-3 h-3" />
+              House of GHOUL
+            </a>
             <span className="inline-flex items-center gap-2 px-4 py-2 text-[10px] font-bold tracking-[0.4em] uppercase border-2 border-[#ff00ff]/40 text-[#ff00ff]"
               style={{ boxShadow: '0 0 20px rgba(255,0,255,0.2), inset 0 0 10px rgba(255,0,255,0.1)' }}>
               <span className="w-2 h-2 bg-[#ff00ff] animate-pulse" />
@@ -185,6 +207,11 @@ export default function Home() {
             When the music stops and the lights come up, <span className="text-[#ff00ff] font-bold">the real party begins.</span>
           </p>
 
+          <div className="hero-sub flex items-center justify-center gap-4 mb-8">
+            <div className="w-48 h-48 md:w-64 md:h-64 mx-auto">
+              <PartyMascot />
+            </div>
+          </div>
           <div className="hero-sub flex items-center justify-center gap-4">
             <a href="#products" className="group inline-flex items-center gap-3 px-8 py-4 font-bungee text-sm tracking-wider uppercase text-[#0a0a1a] transition-all hover:scale-105"
               style={{ background: 'linear-gradient(135deg, #ff00ff, #ff0080)', boxShadow: '0 0 30px rgba(255,0,255,0.4)' }}>
@@ -202,11 +229,12 @@ export default function Home() {
       {/* ===== STATS ===== */}
       <section ref={statsRef} className="relative py-20 md:py-32 px-4 overflow-hidden">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
             {[
               { label: 'PARTIES CLEANED', value: '∞', color: '#ff00ff', sub: 'And counting' },
               { label: 'STAINS LEFT', value: '0', color: '#00f0ff', sub: 'Absolutely none' },
               { label: 'GLOW UP RATE', value: '100%', color: '#ffff00', sub: 'Every single time' },
+              { label: 'HOUSE OF GHOUL', value: '6', color: '#f59e0b', sub: 'Live brands' },
             ].map((stat, i) => (
               <div key={i} className="reveal relative p-8 md:p-12 text-center group"
                 style={{
@@ -238,6 +266,27 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== ECOSYSTEM ===== */}
+      <section ref={ecosystemRef} id="ecosystem" className="relative py-24 md:py-32 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="reveal text-center mb-12">
+            <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#00f0ff] mb-4 block">
+              The Portfolio
+            </span>
+            <h2 className="font-bungee text-4xl md:text-6xl text-white mb-4"
+              style={{ textShadow: '0 0 20px rgba(255,255,255,0.1)' }}>
+              THE ECOSYSTEM
+            </h2>
+            <p className="text-[#94a3b8] max-w-lg mx-auto">
+              6 independent brands. 54 products. 1 universe. 1 game. Built on shared IP.
+            </p>
+          </div>
+          <div className="reveal">
+            <EcosystemMap />
           </div>
         </div>
       </section>
@@ -288,6 +337,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== IP PORTFOLIO ===== */}
+      <section ref={ipRef} id="ip" className="relative">
+        <div className="reveal">
+          <IPBadge />
+        </div>
+      </section>
+
       {/* ===== PRODUCTS ===== */}
       <section ref={productRef} id="products" className="relative py-24 md:py-40 px-4">
         <div className="max-w-7xl mx-auto">
@@ -311,7 +367,7 @@ export default function Home() {
               const count = config.products.filter((p) => p.category === tab.key).length;
               return (
                 <button key={tab.key} onClick={() => setActiveTab(tab.key)}
-                  className="px-5 py-2.5 text-xs font-bold tracking-wider uppercase transition-all"
+                  className="px-5 py-2.5 text-xs font-bold tracking-wider uppercase transition-all min-h-11"
                   style={{
                     background: isActive ? '#ff00ff' : 'transparent',
                     color: isActive ? '#050510' : '#94a3b8',
@@ -369,7 +425,7 @@ export default function Home() {
                     </span>
                   </div>
 
-                  <h3 className="font-bungee text-base text-white mb-1 tracking-wide">
+                  <h3 className="font-bungee text-base text-white mb-1 tracking-wide break-words">
                     {product.name.toUpperCase()}
                   </h3>
                   <p className="text-[#ff00ff] text-xs font-bold mb-3">{product.tagline}</p>
@@ -399,6 +455,20 @@ export default function Home() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* ===== MARKET & TRACTION ===== */}
+      <section ref={marketRef} id="market" className="relative">
+        <div className="reveal">
+          <MarketStats />
+        </div>
+      </section>
+
+      {/* ===== ROADMAP ===== */}
+      <section ref={roadmapRef} id="roadmap" className="relative">
+        <div className="reveal">
+          <RoadmapTimeline />
         </div>
       </section>
 
@@ -516,11 +586,14 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== INVESTOR CTA ===== */}
+      <InvestorCTA />
+
       {/* ===== CTA / FOOTER ===== */}
       <section ref={ctaRef} className="relative py-24 md:py-40 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <div className="reveal mb-8">
-            <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#ff00ff] mb-4 block">Investor Relations</span>
+            <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#ff00ff] mb-4 block">Stay in the Loop</span>
             <h2 className="font-bungee text-4xl md:text-5xl text-white mb-4">{config.cta.headline}</h2>
             <p className="text-[#94a3b8]">{config.cta.subheadline}</p>
           </div>
@@ -549,15 +622,20 @@ export default function Home() {
             })}
           </div>
 
-          <div className="reveal mb-8 flex items-center justify-center gap-4 text-xs">
+          <div className="reveal mb-8 flex flex-wrap items-center justify-center gap-4 text-xs">
             <a href={GHOULVERSE_LINK?.domain || '#'} target="_blank" rel="noopener noreferrer"
-              className="text-[#94a3b8] hover:text-[#ff00ff] transition-colors flex items-center gap-1 tracking-wider">
+              className="text-[#94a3b8] hover:text-[#ff00ff] transition-colors flex items-center gap-1 tracking-wider py-2 px-3 min-h-11">
               <Ghost className="w-3 h-3" /> Explore GHOULVERSE
             </a>
             <span className="text-[#94a3b8]/20">|</span>
             <a href={config.gameUrl} target="_blank" rel="noopener noreferrer"
-              className="text-[#94a3b8] hover:text-[#00f0ff] transition-colors flex items-center gap-1 tracking-wider">
+              className="text-[#94a3b8] hover:text-[#00f0ff] transition-colors flex items-center gap-1 tracking-wider py-2 px-3 min-h-11">
               <Gamepad2 className="w-3 h-3" /> Play GHOULVERSE
+            </a>
+            <span className="text-[#94a3b8]/20">|</span>
+            <a href="#ecosystem"
+              className="text-[#94a3b8] hover:text-[#f59e0b] transition-colors flex items-center gap-1 tracking-wider py-2 px-3 min-h-11">
+              <Briefcase className="w-3 h-3" /> Investors
             </a>
           </div>
 
