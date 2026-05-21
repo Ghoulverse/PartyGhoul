@@ -6,20 +6,12 @@ export default function IPBadge() {
     <section className="relative py-24 md:py-32 px-4 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <span className="text-[#00f0ff] text-xs font-bold tracking-[0.3em] uppercase mb-3 block">
-            Intellectual Property
-          </span>
-          <h2 className="font-mono text-4xl md:text-5xl text-white mb-4">
-            IP & Trademark Portfolio
-          </h2>
-          <p className="text-[#94a3b8] max-w-2xl mx-auto text-lg">
-            Every ghoul is a trademarked entity. The GHOULVERSE is a protected intellectual property 
-            ecosystem designed for multi-channel monetisation.
-          </p>
+          <span className="text-[#00f0ff] text-xs font-bold tracking-[0.3em] uppercase mb-3 block">Intellectual Property</span>
+          <h2 className="font-mono text-4xl md:text-5xl text-white mb-4">IP & Trademark Portfolio</h2>
+          <p className="text-[#94a3b8] max-w-2xl mx-auto text-lg">Every ghoul is a trademarked entity. The GHOULVERSE is a protected intellectual property ecosystem designed for multi-channel monetisation.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          {/* Main IP Card */}
           <div className="glass-glow rounded-2xl p-8 relative overflow-hidden">
             <div className="absolute inset-0 opacity-10" style={{ background: 'radial-gradient(circle at top right, #00f0ff, transparent 70%)' }} />
             <div className="relative">
@@ -33,14 +25,17 @@ export default function IPBadge() {
                 </div>
               </div>
               <p className="text-[#94a3b8] text-sm leading-relaxed mb-4">{config.ipStatus}</p>
-              <div className="flex items-center gap-2 text-[#00f0ff] text-xs">
-                <FileCheck className="w-4 h-4" />
-                <span>IP Australia — Class 3 (Cleaning Products)</span>
+              <div className="flex flex-wrap gap-2">
+                {config.ipClasses.map((cls) => (
+                  <span key={cls} className="inline-flex items-center gap-1.5 text-xs px-2 py-1 rounded-full bg-[#00f0ff]/10 border border-[#00f0ff]/30 text-[#00f0ff]">
+                    <FileCheck className="w-3 h-3" />
+                    {cls}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Protection Grid */}
           <div className="grid grid-cols-1 gap-4">
             {[
               { icon: Lock, title: 'Brand Lockup', desc: 'Logo, name, and character design trademarked across all classes.', color: '#ff00ff' },
@@ -60,27 +55,14 @@ export default function IPBadge() {
           </div>
         </div>
 
-        {/* TM Certificates Strip */}
         <div className="glass rounded-xl p-6 flex flex-wrap items-center justify-center gap-6">
-          <div className="flex items-center gap-2 text-[#94a3b8] text-xs">
-            <FileCheck className="w-4 h-4 text-[#00ff41]" />
-            <span>IP Australia Filed</span>
-          </div>
+          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><FileCheck className="w-4 h-4 text-[#00ff41]" /><span>IP Australia Filed</span></div>
           <div className="w-px h-4 bg-white/10" />
-          <div className="flex items-center gap-2 text-[#94a3b8] text-xs">
-            <FileCheck className="w-4 h-4 text-[#00ff41]" />
-            <span>IP Right Accepted</span>
-          </div>
+          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><FileCheck className="w-4 h-4 text-[#00ff41]" /><span>IP Right Accepted</span></div>
           <div className="w-px h-4 bg-white/10" />
-          <div className="flex items-center gap-2 text-[#94a3b8] text-xs">
-            <FileCheck className="w-4 h-4 text-[#00ff41]" />
-            <span>Early Acceptance</span>
-          </div>
+          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><FileCheck className="w-4 h-4 text-[#00ff41]" /><span>Early Acceptance</span></div>
           <div className="w-px h-4 bg-white/10" />
-          <div className="flex items-center gap-2 text-[#94a3b8] text-xs">
-            <Shield className="w-4 h-4 text-[#00f0ff]" />
-            <span>6 Independent TM Filings</span>
-          </div>
+          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><Shield className="w-4 h-4 text-[#00f0ff]" /><span>6 Independent TM Filings</span></div>
         </div>
       </div>
     </section>
