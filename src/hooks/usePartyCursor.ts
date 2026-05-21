@@ -9,6 +9,8 @@ interface CursorState {
 }
 
 export function usePartyCursor(bpm = 128): CursorState {
+  const TRAIL_OFFSET = 80;
+
   const [state, setState] = useState<CursorState>({
     x: typeof window !== 'undefined' ? window.innerWidth / 2 - 80 : 0,
     y: typeof window !== 'undefined' ? window.innerHeight / 2 - 80 : 0,
@@ -27,8 +29,8 @@ export function usePartyCursor(bpm = 128): CursorState {
   const handleMouseMove = useCallback((e: MouseEvent) => {
     const size = window.innerWidth < 768 ? 90 : 140;
     targetRef.current = {
-      x: Math.max(10, Math.min(window.innerWidth - size - 10, e.clientX - size / 2)),
-      y: Math.max(10, Math.min(window.innerHeight - size - 10, e.clientY - size / 2)),
+      x: Math.max(10, Math.min(window.innerWidth - size - 10, e.clientX - size / 2 + TRAIL_OFFSET)),
+      y: Math.max(10, Math.min(window.innerHeight - size - 10, e.clientY - size / 2 + TRAIL_OFFSET)),
     };
     lastMoveTime.current = Date.now();
   }, []);
@@ -37,8 +39,8 @@ export function usePartyCursor(bpm = 128): CursorState {
     const touch = e.touches[0];
     const size = window.innerWidth < 768 ? 90 : 140;
     targetRef.current = {
-      x: Math.max(10, Math.min(window.innerWidth - size - 10, touch.clientX - size / 2)),
-      y: Math.max(10, Math.min(window.innerHeight - size - 10, touch.clientY - size / 2)),
+      x: Math.max(10, Math.min(window.innerWidth - size - 10, touch.clientX - size / 2 + TRAIL_OFFSET)),
+      y: Math.max(10, Math.min(window.innerHeight - size - 10, touch.clientY - size / 2 + TRAIL_OFFSET)),
     };
     lastMoveTime.current = Date.now();
   }, []);
@@ -49,8 +51,8 @@ export function usePartyCursor(bpm = 128): CursorState {
     const beatInterval = 60000 / bpm;
 
     const animate = () => {
-      const dx = targetRef.current.x - currentRef.current.x;
-      const dy = targetRef.current.y - currentRef.current.y;
+      const dx = (targetRef.current.x + TRAIL_OFFSET) - currentRef.current.x;
+      const dy = (targetRef.current.y + TRAIL_OFFSET) - currentRef.current.y;
 
       velocityRef.current.x = (velocityRef.current.x + dx * spring) * friction;
       velocityRef.current.y = (velocityRef.current.y + dy * spring) * friction;
