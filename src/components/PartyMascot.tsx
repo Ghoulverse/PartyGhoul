@@ -187,7 +187,8 @@ export default function PartyMascot() {
   const typedRef = useRef('');
   const posHistoryRef = useRef<{ x: number; y: number }[]>([]);
 
-  const mascotSize = typeof window !== 'undefined' && window.innerWidth < 768 ? 90 : 140;
+  const mascotSize = typeof window !== 'undefined' && window.innerWidth < 768 ? 180 : 280;
+  const cursorRef = useRef({ x, y, isMoving, velocity, beatPulse, mascotSize });
 
   // Confetti burst
   const spawnConfetti = useCallback((cx: number, cy: number, count = 40) => {
@@ -281,6 +282,8 @@ export default function PartyMascot() {
     if (posHistoryRef.current.length > 20) posHistoryRef.current.shift();
   }, [x, y]);
 
+  cursorRef.current = { x, y, isMoving, velocity, beatPulse, mascotSize };
+
   // Main animation loop
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -296,6 +299,7 @@ export default function PartyMascot() {
     window.addEventListener('resize', resize);
 
     const animate = () => {
+      const { x, y, isMoving, velocity, beatPulse, mascotSize } = cursorRef.current;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Glow stick trail
@@ -409,7 +413,7 @@ export default function PartyMascot() {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', resize);
     };
-  }, [x, y, isMoving, velocity, beatPulse, mascotSize]);
+  }, []);
 
   return (
     <>
@@ -484,7 +488,7 @@ export default function PartyMascot() {
             draggable={false}
             style={{
               filter: isHovered
-                ? 'brightness(1.15) drop-shadow(0 0 20px rgba(255,0,255,0.5)) drop-shadow(0 0 40px rgba(0,240,255,0.3))'
+                ? 'brightness(1.15)'
                 : undefined,
               transition: 'filter 0.3s ease',
             }}
