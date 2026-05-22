@@ -7,7 +7,6 @@ import {
   Briefcase, Building2,
 } from 'lucide-react';
 import { config } from '@/data/ghoul.config';
-import PartyMascot from '@/components/PartyMascot';
 import PartyParticles from '@/components/PartyParticles';
 import EcosystemMap from '@/components/EcosystemMap';
 import MarketStats from '@/components/MarketStats';
@@ -206,7 +205,7 @@ export default function Home() {
 
           <div className="hero-sub flex items-center justify-center gap-4 mb-8">
             <div className="w-48 h-48 md:w-64 md:h-64 mx-auto">
-              <PartyMascot />
+              <img src="/ghoul_mascot.png" alt="PartyGhoul mascot" className="w-full h-full object-contain" draggable={false} style={{ animation: 'ghost-bob 2.5s ease-in-out infinite, ghost-sway 3.5s ease-in-out infinite' }} />
             </div>
           </div>
           <div className="hero-sub flex items-center justify-center gap-4">
