@@ -8,7 +8,7 @@ export default function IPBadge() {
         <div className="text-center mb-16">
           <span className="text-[#00f0ff] text-xs font-bold tracking-[0.3em] uppercase mb-3 block">Intellectual Property</span>
           <h2 className="font-mono text-4xl md:text-5xl text-white mb-4">IP & Trademark Portfolio</h2>
-          <p className="text-[#94a3b8] max-w-2xl mx-auto text-lg">Every ghoul is a trademarked entity. The GHOULVERSE is a protected intellectual property ecosystem designed for multi-channel monetisation.</p>
+          <p className="text-[#94a3b8] max-w-2xl mx-auto text-lg">Character IP strategy in place. GOO GHOUL™ is trademarked in Australia. All ghouls are mapped to target trademark classes.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
@@ -21,7 +21,7 @@ export default function IPBadge() {
                 </div>
                 <div>
                   <p className="font-mono text-sm text-white font-bold">{config.name}</p>
-                  <p className="text-[#94a3b8] text-xs">Trademark Protected</p>
+                  <p className="text-[#94a3b8] text-xs">Trademark Planned</p>
                 </div>
               </div>
               <p className="text-[#94a3b8] text-sm leading-relaxed mb-4">{config.ipStatus}</p>
@@ -38,7 +38,7 @@ export default function IPBadge() {
 
           <div className="grid grid-cols-1 gap-4">
             {[
-              { icon: Lock, title: 'Brand Lockup', desc: 'Logo, name, and character design trademarked across all classes.', color: '#ff00ff' },
+              { icon: Lock, title: 'Brand Lockup', desc: 'Logo, name, and character design mapped for trademark protection across target classes.', color: '#ff00ff' },
               { icon: Globe, title: 'International Strategy', desc: 'US, UK, and EU trademark filings planned for Phase 3.', color: '#00f0ff' },
               { icon: Shield, title: 'Character IP', desc: 'Each ghoul is a distinct character with product-line, game, and merch potential.', color: '#f59e0b' },
             ].map((item) => (
@@ -56,13 +56,13 @@ export default function IPBadge() {
         </div>
 
         <div className="glass rounded-xl p-6 flex flex-wrap items-center justify-center gap-6">
-          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><FileCheck className="w-4 h-4 text-[#00ff41]" /><span>IP Australia Filed</span></div>
+          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><FileCheck className="w-4 h-4 text-[#00ff41]" /><span>GOO GHOUL™ Filed</span></div>
           <div className="w-px h-4 bg-white/10" />
-          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><FileCheck className="w-4 h-4 text-[#00ff41]" /><span>IP Right Accepted</span></div>
+          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><FileCheck className="w-4 h-4 text-[#00ff41]" /><span>GOO GHOUL™ Accepted</span></div>
           <div className="w-px h-4 bg-white/10" />
-          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><FileCheck className="w-4 h-4 text-[#00ff41]" /><span>Early Acceptance</span></div>
+          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><FileCheck className="w-4 h-4 text-[#00ff41]" /><span>12 Characters Defined</span></div>
           <div className="w-px h-4 bg-white/10" />
-          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><Shield className="w-4 h-4 text-[#00f0ff]" /><span>6 Independent TM Filings</span></div>
+          <div className="flex items-center gap-2 text-[#94a3b8] text-xs"><Shield className="w-4 h-4 text-[#00f0ff]" /><span>11 TM Filings Planned</span></div>
         </div>
       </div>
     </section>

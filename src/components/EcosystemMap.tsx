@@ -1,14 +1,7 @@
 import { config } from '@/data/ghoul.config';
 import { ArrowRight, Globe, Gamepad2 } from 'lucide-react';
 
-const ALL_GHOULS = [
-  { id: 'party', name: 'PARTY', color: '#ff00ff', icon: '🎉', live: true },
-  { id: 'beauty', name: 'BEAUTY', color: '#ec4899', icon: '💄', live: true },
-  { id: 'garden', name: 'GARDEN', color: '#22c55e', icon: '🌿', live: true },
-  { id: 'zen', name: 'ZEN', color: '#a855f7', icon: '🧘', live: true },
-  { id: 'tradie', name: 'TRADIE', color: '#eab308', icon: '🔧', live: true },
-  { id: 'geek', name: 'GEEK', color: '#00d4ff', icon: '💻', live: true },
-];
+const ALL_GHOULS = config.crossLinks.filter((c) => c.id !== 'ghoulverse');
 
 export default function EcosystemMap() {
   const currentId = config.id;
@@ -21,7 +14,7 @@ export default function EcosystemMap() {
             The House of GHOUL
           </span>
           <h2 className="font-mono text-4xl md:text-5xl text-white mb-4">
-            You Are Looking at 1 of 6
+            You Are Looking at 1 of 12
           </h2>
           <p className="text-[#94a3b8] max-w-2xl mx-auto text-lg">
             The House of GHOUL is a portfolio of specialised cleaning brands, each owning a 
@@ -36,7 +29,7 @@ export default function EcosystemMap() {
             return (
               <a
                 key={g.id}
-                href={config.crossLinks.find((c) => c.id === g.id)?.domain || '#'}
+                href={g.live ? g.domain : `https://www.ghoulverse.com/ghouls/${g.id}/`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`group relative rounded-xl p-4 text-center transition-all duration-300 hover:-translate-y-1 ${
@@ -51,7 +44,7 @@ export default function EcosystemMap() {
                   </span>
                 )}
                 <div className="text-3xl mb-2">{g.icon}</div>
-                <p className="font-mono text-xs text-white font-bold">{g.name}</p>
+                <p className="font-mono text-xs text-white font-bold">{g.name.replace(' GHOUL', '')}</p>
                 <div
                   className="w-2 h-2 rounded-full mx-auto mt-2"
                   style={{ backgroundColor: g.color, boxShadow: `0 0 8px ${g.color}` }}
@@ -64,10 +57,10 @@ export default function EcosystemMap() {
         {/* Aggregate Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           {[
-            { label: 'Product SKUs', value: '54', sub: 'Across 6 brands' },
-            { label: 'Market Verticals', value: '6', sub: 'Zero overlap' },
-            { label: 'Game Characters', value: '8', sub: 'In GOO RUNNER' },
-            { label: 'Trademarks', value: '6+', sub: 'IP Australia' },
+            { label: 'Product SKUs', value: '108+', sub: 'Across 12 brands' },
+            { label: 'Market Verticals', value: '12', sub: 'Zero overlap' },
+            { label: 'Game Characters', value: '12', sub: 'In GHOULVERSE' },
+            { label: 'Trademarks', value: '1', sub: 'GOO GHOUL™ accepted' },
           ].map((stat) => (
             <div key={stat.label} className="glass rounded-xl p-5 text-center">
               <p className="font-mono text-3xl md:text-4xl text-[#ff00ff] mb-1">{stat.value}</p>
@@ -97,7 +90,7 @@ export default function EcosystemMap() {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-mono text-xs tracking-wider uppercase border border-[#00f0ff]/30 text-[#00f0ff] hover:bg-[#00f0ff]/10 transition-all"
           >
             <Gamepad2 className="w-4 h-4" />
-            Play GOO RUNNER
+            Play GHOULVERSE
           </a>
         </div>
       </div>

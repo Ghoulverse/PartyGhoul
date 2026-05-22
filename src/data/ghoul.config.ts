@@ -71,7 +71,7 @@ export const config: GhoulConfig = {
   name: "PARTY GHOUL",
   tagline: "The Aftermath Specialist",
   description:
-    "When the music stops and the lights come up, PARTY GHOUL emerges from the shadows. No mess too wild, no stain too stubborn.",
+    "When the music stops and the lights come up, PARTY GHOUL emerges from the shadows. No mess too wild, no stain too stubborn. From event-safe drug testing kits to throwing its own festival — PARTY GHOUL protects every part of the party.",
   domain: "https://www.partyghoul.com",
   icon: "🎉",
   isLeader: false,
@@ -322,7 +322,7 @@ export const config: GhoulConfig = {
     { label: "GHOULVERSE Game", value: "Live", status: "complete" },
     { label: "Brand Partnerships", value: "Seeking First Deals", status: "upcoming" },
   ],
-  ipStatus: "Trademark filed — Class 3 (event cleaning preparations) and Class 41 (event organisation & entertainment services).",
+  ipStatus: "Trademark classes identified — Class 3 (event cleaning preparations) and Class 41 (event organisation & entertainment services). Filing planned post-funding.",
   ipClasses: [
     "Class 3 — Cleaning preparations for events & venues",
     "Class 41 — Entertainment & event organisation services",

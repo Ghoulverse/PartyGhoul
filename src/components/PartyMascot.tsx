@@ -45,7 +45,7 @@ const SPEECH_LINES = [
   "NEVER STOP!",
 ];
 
-function PartyGhostSVG({ expression, beatPulse, isHovered }: {
+export function PartyGhostSVG({ expression, beatPulse, isHovered }: {
   expression: number;
   beatPulse: number;
   isHovered: boolean;
@@ -173,7 +173,7 @@ function PartyGhostSVG({ expression, beatPulse, isHovered }: {
 
 export default function PartyMascot() {
   const { x, y, isMoving, velocity, beatPulse } = usePartyCursor(128);
-  const [expression, setExpression] = useState(0);
+  const [_expression, setExpression] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [speechBubble, setSpeechBubble] = useState('');
   const [raveMode, setRaveMode] = useState(false);
@@ -477,7 +477,18 @@ export default function PartyMascot() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <PartyGhostSVG expression={expression} beatPulse={beatPulse} isHovered={isHovered} />
+          <img
+            src="/ghoul_logo.png"
+            alt="PARTY GHOUL"
+            className="w-full h-full object-contain"
+            draggable={false}
+            style={{
+              filter: isHovered
+                ? 'brightness(1.15) drop-shadow(0 0 20px rgba(255,0,255,0.5)) drop-shadow(0 0 40px rgba(0,240,255,0.3))'
+                : undefined,
+              transition: 'filter 0.3s ease',
+            }}
+          />
         </div>
       </div>
     </>
