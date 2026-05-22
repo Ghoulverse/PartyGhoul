@@ -144,10 +144,7 @@ export default function Home() {
         style={{ borderColor: 'rgba(255,0,255,0.15)', background: 'rgba(5,5,16,0.85)', backdropFilter: 'blur(12px)' }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 border-2 border-[#ff00ff] flex items-center justify-center animate-pulse"
-              style={{ boxShadow: '0 0 15px rgba(255,0,255,0.4), inset 0 0 10px rgba(255,0,255,0.2)' }}>
-              <span className="text-sm">{config.icon}</span>
-            </div>
+            <img src="/ghoul_logo.png" alt={config.name} className="w-8 h-8 object-contain" draggable={false} />
             <span className="font-bungee text-sm tracking-[0.3em] text-[#ff00ff]"
               style={{ textShadow: '0 0 10px rgba(255,0,255,0.6)' }}>
               {config.name}

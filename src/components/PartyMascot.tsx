@@ -478,7 +478,7 @@ export default function PartyMascot() {
           onMouseLeave={() => setIsHovered(false)}
         >
           <img
-            src="/ghoul_logo.png"
+            src="/ghoul_mascot.png"
             alt="PARTY GHOUL"
             className="w-full h-full object-contain"
             draggable={false}
